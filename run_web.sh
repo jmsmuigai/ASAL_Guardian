@@ -12,9 +12,15 @@ fi
 
 source venv/bin/activate
 
-if [ -z "$GOOGLE_API_KEY" ]; then
+# Load .env file if it exists (API key will be loaded automatically)
+if [ -f .env ]; then
+    echo "✅ Loading API key from .env file..."
+    export $(cat .env | grep -v '^#' | xargs)
+elif [ -z "$GOOGLE_API_KEY" ]; then
     echo "⚠️  WARNING: GOOGLE_API_KEY not set"
-    echo "Please set it with: export GOOGLE_API_KEY='your_key_here'"
+    echo "Please either:"
+    echo "  1. Create a .env file with: GOOGLE_API_KEY=your_key_here"
+    echo "  2. Or export it: export GOOGLE_API_KEY='your_key_here'"
     exit 1
 fi
 

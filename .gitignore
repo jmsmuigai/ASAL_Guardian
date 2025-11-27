@@ -9,10 +9,14 @@ env/
 ENV/
 .venv
 
-# Environment variables
+# Environment variables (NEVER commit these!)
 .env
 .env.local
 .env.*.local
+# API keys and secrets
+*.key
+*_key.txt
+secrets/
 
 # IDE
 .vscode/

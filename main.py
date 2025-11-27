@@ -2,8 +2,12 @@ import google.generativeai as genai
 import json
 import os
 import time
+from dotenv import load_dotenv
 
 # --- Configuration ---
+# Load environment variables from .env file if it exists
+load_dotenv()
+
 # Ensure API Key is set in your environment variables
 try:
     api_key = os.environ["GOOGLE_API_KEY"]
@@ -12,7 +16,9 @@ try:
     print("✅ [SYSTEM] Google AI API Key configured.")
 except KeyError:
     print("❌ CRITICAL ERROR: GOOGLE_API_KEY environment variable not found.")
-    print("   Please set the key using: export GOOGLE_API_KEY='your_key_here'")
+    print("   Please set the key using one of these methods:")
+    print("   1. Create a .env file with: GOOGLE_API_KEY=your_key_here")
+    print("   2. Or export it: export GOOGLE_API_KEY='your_key_here'")
     exit() # Exit if the key is not found
 
 class Agent:

@@ -4,7 +4,11 @@ Deployable to Google Cloud Run for the "Agents for Good" hackathon submission.
 """
 from flask import Flask, jsonify, render_template_string
 import os
+from dotenv import load_dotenv
 from main import run_agent_workflow
+
+# Load environment variables from .env file if it exists
+load_dotenv()
 
 app = Flask(__name__)
 
