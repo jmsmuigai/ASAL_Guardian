@@ -24,7 +24,24 @@ except KeyError:
 class Agent:
     """
     Base class for ASAL-Guardian Agents.
-    Handles model initialization and safe content generation.
+    
+    This class provides the foundation for all agents in the multi-agent system.
+    It handles model initialization with system instructions (personas), error
+    handling, and provides a unified interface for content generation.
+    
+    Design Pattern: Template Method - Subclasses implement specific behaviors
+    while this base class handles common functionality.
+    
+    Attributes:
+        name (str): Human-readable name of the agent (e.g., "Sentinel", "Guardian")
+        model_name (str): Gemini model identifier (e.g., "models/gemini-2.5-pro")
+        instructions (str): System instructions that define the agent's persona and behavior
+        model: Initialized GenerativeModel instance (None if initialization fails)
+    
+    Behavior:
+        - Automatically loads API key from environment variables
+        - Gracefully handles model initialization failures
+        - Provides safe content generation with error handling
     """
     def __init__(self, name, model_name, instructions):
         self.name = name
@@ -112,8 +129,26 @@ You will receive a JSON analysis from the Guardian agent. Based on this analysis
 
 def get_available_model(preferred_models):
     """
-    Try to find an available model from a list of preferred models.
-    Falls back gracefully if newer models aren't available.
+    Intelligent model selection with automatic fallback.
+    
+    This function implements a smart model selection strategy that ensures
+    system reliability across different API access levels. It queries the
+    Gemini API for available models and selects the best match from a
+    preference list, falling back gracefully if preferred models aren't available.
+    
+    This addresses the "404 model not found" issue by dynamically discovering
+    what models are actually available to the current API key.
+    
+    Args:
+        preferred_models (list): Ordered list of model names, from most to least preferred
+            Example: ["models/gemini-2.5-pro", "models/gemini-1.5-pro"]
+    
+    Returns:
+        str: Model name that is available and ready to use
+    
+    Design Decision:
+        We prefer newer models (2.5) but gracefully fall back to 1.5 for
+        compatibility. This ensures the system works regardless of API access level.
     """
     try:
         available_models = []
@@ -137,7 +172,25 @@ def get_available_model(preferred_models):
 
 def run_agent_workflow():
     """
-    This is the main orchestration loop that ties the agents together.
+    Main orchestration function for the multi-agent workflow.
+    
+    This function implements a sequential agent workflow where:
+    1. Sentinel Agent ingests and structures raw data
+    2. Guardian Agent analyzes structured data against NDMA thresholds
+    3. Responder Agent generates actionable communication artifacts
+    
+    Architecture Pattern: Sequential Pipeline
+    - Each agent depends on the previous agent's output
+    - Data flows as: Raw Input → Structured JSON → Analysis → Actionable Output
+    - This ensures data quality and prevents errors from cascading
+    
+    Design Decision: Sequential vs Parallel
+    - We chose sequential because Guardian needs Sentinel's structured data
+    - Responder needs Guardian's analysis to generate appropriate communications
+    - Parallel processing would break these dependencies
+    
+    Returns:
+        dict: Contains outputs from all three agents for further processing
     """
     print("\n" + "="*60)
     print("🚀 INITIATING ASAL-GUARDIAN MULTI-AGENT WORKFLOW...")
