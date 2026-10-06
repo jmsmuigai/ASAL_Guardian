@@ -56,7 +56,7 @@ export GOOGLE_API_KEY='paste_your_key_here'
 
 **Example:**
 ```bash
-export GOOGLE_API_KEY='AIzaSyAbCdEfGhIjKlMnOpQrStUvWxYz1234567'
+export GOOGLE_API_KEY='your_new_key_here'
 ```
 
 **What should happen:**
