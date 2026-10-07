@@ -38,3 +38,12 @@ Thumbs.db
 # PDFs (if they contain sensitive data)
 # Uncomment if needed:
 # *.pdf
+
+# Secrets and local environment (added by docs refresh)
+.env.*
+!.env.example
+*.pem
+serviceAccount*.json
+node_modules/
+*.pyc
+.venv/

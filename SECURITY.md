@@ -1,67 +1,31 @@
-# 🔐 Security: API Key Protection
+# Security Policy
 
-## ✅ Your API Key is Now Secured!
+## Supported versions
 
-Your API key has been set up securely and is **NOT** committed to git.
+Only the `main` branch of **ASAL Guardian** is maintained. Security fixes are applied to `main`; older commits, forks and copies are not supported.
 
-## 📁 Where Your Key is Stored
+## Reporting a vulnerability
 
-- **`.env` file** - Contains your actual API key (hidden from git)
-- **`.env.example`** - Template file (safe to commit, no real key)
+Please **do not open a public GitHub issue** for security problems.
 
-## 🛡️ Protection Measures
+Email **intelligence@tovutech.com** with:
 
-1. ✅ `.env` is in `.gitignore` - Never committed to git
-2. ✅ Code loads from `.env` automatically using `python-dotenv`
-3. ✅ No hardcoded keys in any code files
-4. ✅ All scripts check for keys safely
+- a description of the issue and where it is (file, URL or page),
+- steps to reproduce it, and
+- the impact you think it has.
 
-## 🚀 How It Works
+We aim to acknowledge reports within a few working days and will tell you when a fix is published. Please give us reasonable time to fix the issue before disclosing it publicly.
 
-The system automatically loads your API key from the `.env` file:
+## Secrets and personal data
 
-```python
-from dotenv import load_dotenv
-load_dotenv()  # Loads .env file automatically
-```
+- **Never commit secrets** (API keys, passwords, tokens, private keys, service-account files) to this repository.
+- Keys belong in environment variables, a local `.env` file (ignored by git; copy from `.env.example` where one exists) or your hosting platform's secret store.
+- Keys that must run in a browser (for example a public web API key) must be restricted in the provider's console to the site's domain and to the APIs it needs.
+- Personal data (names, phone numbers, ID numbers, applicant or staff records) must not be committed. Use synthetic or anonymised samples for demos and tests.
+- `app.py` starts Flask with `debug=True` when run directly. Use it only on your own machine; for any shared or public deployment run it with `gunicorn` (see `Procfile`), which does not enable the debugger.
 
-You don't need to manually export it anymore!
-
-## ✅ Testing
-
-Your API key is working! The diagnostic test showed:
-- ✅ API key loaded successfully
-- ✅ Multiple Gemini models available
-- ✅ System ready to use
-
-## ⚠️ Important Security Notes
-
-1. **Never commit `.env`** - It's already in `.gitignore`
-2. **Don't share your key** - Keep it private
-3. **Rotate if exposed** - If you accidentally share it, create a new one
-4. **Use different keys** - Use separate keys for development and production
-
-## 🔄 If You Need to Change Your Key
-
-1. Edit the `.env` file:
-   ```bash
-   nano .env
-   # or
-   open .env
-   ```
-
-2. Update the `GOOGLE_API_KEY` value
-
-3. Restart your scripts - they'll automatically pick up the new key
-
-## 📋 Current Status
-
-- ✅ API key configured: `AIzaSy...97WM`
-- ✅ Key loaded from `.env` file
-- ✅ Protected from git commits
-- ✅ System tested and working
+If you find a secret or personal data in this repository or its history, report it to the address above so it can be removed and the credential rotated.
 
 ---
 
-**Your API key is safe and secure!** 🔒
-
+Maintained by TovuTech Limited · https://www.tovutech.com
